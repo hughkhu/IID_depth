@@ -1,7 +1,7 @@
-addpath('filtering\\RGF');                     % rolling guidance filter
+addpath('filtering\\RGF');      % rolling guidance filter
 % Read Data & Preprocessing (Structure-texture separation)
-I = im2double(imread('images\\image0171.png'));
-depth = double(imread('images\\raw_depth0171.png'))/1000.0;
+I = im2double(imread('images\\image0008.png'));
+depth = double(imread('images\\raw_depth0008.png'))/1000.0;
 %raw_depth in mm, here coverts to meter
 
 % Structure-Texture Separation (L.Karacan,E. Erdem and A. Erdem.
@@ -10,16 +10,13 @@ depth = double(imread('images\\raw_depth0171.png'))/1000.0;
 % November 2013) 
 S = RollingGuidanceFilter(I, 3, 0.1, 4);
 %%
-%{
+slic = 1;
 tic
- [reflectance2, shading2] = IID_adapted(I, S, depth);
+if slic
+    [reflectance, shading] = IID_slic(I, S, depth, 1);
+else
+    [reflectance, shading] = IID_adapted(I, S, depth, 1);
+end
 toc
- [reflectance, shading] = IID_slic(I, S, depth);
-%}
-[reflectance, shading] = myiidSLIC_noFilter(I, depth, 0.0001, 0.8, 0.5);
 figure;imshow(reflectance);
 figure;imshow(shading);
-%{
-imwrite(shading,'8s.png');
-imwrite(reflectance,'8r.png');
-%}
