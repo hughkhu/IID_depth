@@ -1,11 +1,12 @@
-function [ res_r, res_s ] = IID_slic( I, S, depth)
+function [ res_r, res_s ] = IID_slic( I, S, depth, crop_option)
 %   Matlab implementation of My Undergraduate thesis about 
 %   Intrinsic Image Decomposition using Depths.
 %
 %   Parameters
 %   I: input RGB image (double)
-%   S: texture-removed RGB image (in original paper, we use regcovsmooth.
+%   S: texture-removed RGB image 
 %   depth: Kinect depth image (in meter).
+%   crop_option: crop the image or not. 1 for yes, 0 for no.
 %   sigma_c, sigma_i, sigma_n: modification is not recommended.
 %   ==========
 %   The Code is created by reference to the following paper:
@@ -17,7 +18,6 @@ function [ res_r, res_s ] = IID_slic( I, S, depth)
 %   Date  : 2016-07-11
 %   Version : 1.0 
     disp('Previous Processing...');
-    crop=1;
     run('D:\MatlabWorks\vlfeat-0.9.19/toolbox/vl_setup.m');
     addpath('utils');            % basic utilities
     %some para,not recommend to change.
@@ -34,7 +34,7 @@ function [ res_r, res_s ] = IID_slic( I, S, depth)
     [nx, ny, nz] = surfnorm(Points(:,:,1),Points(:,:,2),Points(:,:,3));
     nMap = cat(3,nx,ny,nz);
     % Cropping (Kinect RGB image has a white padding)
-    if crop
+    if crop_option
         S = S(7:h-6, 9:w-8, :);
         I = I(7:h-6, 9:w-8, :);
         Points = Points(7:h-6, 9:w-8, :);           % cropping the image

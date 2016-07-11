@@ -1,17 +1,18 @@
-function [ res_r, res_s ] = IID_adapted( I, S, depth )
+function [ res_r, res_s ] = IID_adapted( I, S, depth, crop_option )
 %   It require RGB image, its texture-removed image, and aligned depth image as inputs.
 %   It decompose input image into reflectance and shading image.
 %   Parameters
 %   I: input RGB image (double)
 %   S: texture-removed RGB image
 %   depth: Kinect depth image (in meter).
+%   crop_option: crop the image or not. 1 for yes, 0 for no.
 %   ==========
 %   The Code is created adapted from the method described in the following paper:
 %   [1] "Intrinsic Image Decomposition Using Structure-Texture Separation
 %   and Surface Normals", Junho Jeon, Sunghyun Cho, Xin Tong, Seungyong
 %   Lee, European Conference on Computer Vision (ECCV), 2014
 
-    crop=1;% crop the image or not.
+    disp('Previous Processing...');
     run('D:\MatlabWorks\vlfeat-0.9.19/toolbox/vl_setup.m');% for KD-Tree 
     addpath('utils'); % basic utilities
     %some para,not recommend to change.
@@ -28,7 +29,7 @@ function [ res_r, res_s ] = IID_adapted( I, S, depth )
     [nx, ny, nz]=surfnorm(Points(:,:,1),Points(:,:,2),Points(:,:,3));
     nMap=cat(3,nx,ny,nz);
     % Cropping (Kinect RGB image has a white padding)
-    if crop
+    if crop_option
         S = S(7:h-6, 9:w-8, :);
         I = I(7:h-6, 9:w-8, :);
         Points = Points(7:h-6, 9:w-8, :);     

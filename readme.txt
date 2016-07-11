@@ -4,4 +4,8 @@
 4.使用demo进行操作
 
 2016-7-11
-add IID_slic.m
+add IID_slic.m 
+* IID_slic(I, I, depth, 1) means not use filter 
+add demo-NYU.m
+add demo-Sintel.m
+* add option such as select IID_slic or not, select cropping or not
