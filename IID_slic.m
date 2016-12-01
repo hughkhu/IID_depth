@@ -55,7 +55,8 @@ function [ res_r, res_s ] = IID_slic( I, S, depth, crop_option)
 
 %% SLIC sample
     disp('SLIC Grouping...');
-    [labels, numlabels] = slicmex(I,2000,20);%numlabels is the same as number of superpixels
+    %[labels, numlabels] = slicmex(I,2000,20);%numlabels is the same as number of superpixels
+    [labels, numlabels] = slicmex(im2uint8(I),2000,20);%numlabels is the same as number of superpixels
     labels = labels+1;
     % figure,imagesc(labels);
     % colormap jet;
